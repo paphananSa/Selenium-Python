@@ -4,8 +4,9 @@ from selenium.webdriver.common.by import By
 import time
 import openpyxl
 from openpyxl import workbook
-import datetime
+from datetime import datetime
 from os import fsync
+import os
 
 
 FilePath = "C:\\Users\\MSI\\Documents\\GitHub\\Selenium-Python\\Data\\data_test.xlsx"
@@ -13,23 +14,17 @@ dataSheet = "Sheet1"
 wb = openpyxl.load_workbook(FilePath)
 ws = wb[dataSheet]
 
+today = datetime.now()
+parent_dir = "C:\\Users\\MSI\\Documents\\GitHub\\Selenium-Python\\Data\\Result"
+#------Create diractory--------------
+path = os.path.join(parent_dir, "Result_" + today.strftime('%Y-%m-%d_%H.%M.%S'))
+os.mkdir(path)
+
 row_count = ws.max_row
 col_count = ws.max_column
 print("row is : ", row_count, "column is : ", col_count)
 
-
-ts=time.time() #get the time, to use in a filename
-ds=datetime.datetime.fromtimestamp(ts).strftime('%Y%m%d%H%M') #format the time for the filename
-
-f2=open('OutputLog_'+ds+'.txt','w') #my file is output_log + the date time stamp
-
-f2.flush() 
-fsync(f2.fileno())
-f2.close()
-
-
 driver = webdriver.Chrome(executable_path="c:\\browserdivers\\chromedrivers.exe")
-
 driver.get("https://pypi.org/")
 driver.maximize_window()
 time.sleep(2)
@@ -60,14 +55,13 @@ for x in range(row_count-1):
         
     Data_check = validate_login.text
     time.sleep(2)
-
+    
     #------check passed and failed--------
     if Data_check == ws.cell(x, 6).value:
-        ws(FilePath, "_", ds, "Sheet1", x, 5, "Passed")
-    else:
-        ws(FilePath, "_", ds, "Sheet1", x, 5, "Failed")
-    wb.save
-    wb(FilePath, "_", ds, "Sheet1", x, 5, "Failed")
+        ws.cell(x, 5).value = "Passed"
+        # ws(FilePath, "_", ds, "Sheet1", x, 5, )
+    else:   
+        ws.cell(x, 5).value = "Failed"
+    wb.save (path + "\\Result_" + today.strftime('%Y-%m-%d') + ".xlsx")
 
-#เหลือเขียน pass ลง excel     writeData(path, "Sheet1",r,3, "Failed")
 driver.close()

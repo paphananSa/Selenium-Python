@@ -3,11 +3,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import time
 import openpyxl
-from openpyxl import workbook
+# from openpyxl import workbook
 from datetime import datetime
-from os import fsync
 import os
-
 
 FilePath = "C:\\Users\\MSI\\Documents\\GitHub\\Selenium-Python\\Data\\data_test.xlsx"
 dataSheet = "Sheet1"
@@ -62,6 +60,6 @@ for x in range(row_count-1):
         # ws(FilePath, "_", ds, "Sheet1", x, 5, )
     else:   
         ws.cell(x, 5).value = "Failed"
-    wb.save (path + "\\Result_" + today.strftime('%Y-%m-%d') + ".xlsx")
+    wb.save (path + "\\Result_" + today.strftime('%Y-%m-%d_%H.%M.%S') + ".xlsx")
 
 driver.close()

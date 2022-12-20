@@ -6,7 +6,7 @@ import openpyxl
 # from openpyxl import workbook
 from datetime import datetime
 import os
-#test
+
 FilePath = "C:\\Users\\MSI\\Documents\\GitHub\\Selenium-Python\\Data\\data_test.xlsx"
 dataSheet = "Sheet1"
 wb = openpyxl.load_workbook(FilePath)

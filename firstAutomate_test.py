@@ -57,7 +57,6 @@ for x in range(row_count-1):
     #------check passed and failed--------
     if Data_check == ws.cell(x, 6).value:
         ws.cell(x, 5).value = "Passed"
-        # ws(FilePath, "_", ds, "Sheet1", x, 5, )
     else:   
         ws.cell(x, 5).value = "Failed"
     wb.save (path + "\\Result_" + today.strftime('%Y-%m-%d_%H.%M.%S') + ".xlsx")
